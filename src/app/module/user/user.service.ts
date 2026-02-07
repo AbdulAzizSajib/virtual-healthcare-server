@@ -1,4 +1,6 @@
+import status from "http-status";
 import { Role, Specialty } from "../../../generated/prisma/client";
+import AppError from "../../errorHelpers/AppError";
 import { auth } from "../../lib/auth";
 import { prisma } from "../../lib/prisma";
 import { IcreateDoctorPayload } from "./user.interface";
@@ -19,7 +21,11 @@ const createDoctor = async (payload: IcreateDoctorPayload) => {
     });
     // যদি কোনো specialty না পাওয়া যায় তাহলে error throw করো
     if (!specialty) {
-      throw new Error(`Specialty with id ${specialtyId} not found`);
+      // throw new Error(`Specialty with id ${specialtyId} not found`);
+      throw new AppError(
+        status.BAD_REQUEST,
+        `Specialty with id ${specialtyId} not found`,
+      );
     }
     // Valid specialty হলে array তে push করো (পরে doctor-specialty linking এ লাগবে)
     specialties.push(specialty);
@@ -39,7 +45,10 @@ const createDoctor = async (payload: IcreateDoctorPayload) => {
   console.log(userExists);
   // যদি user থাকে (truthy value) তাহলে error throw করে signup process বন্ধ করো
   if (userExists) {
-    throw new Error(`User with email ${payload.doctor.email} already exists`);
+    throw new AppError(
+      status.CONFLICT,
+      `User with email ${payload.doctor.email} already exists`,
+    );
   }
 
   // ==========================================
