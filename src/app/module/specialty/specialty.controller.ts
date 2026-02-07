@@ -6,6 +6,7 @@ import { sendResponse } from "../../shared/sendResponse";
 //
 const createSpecialty = catchAsync(async (req: Request, res: Response) => {
   const payload = req.body;
+  console.log(payload);
   const result = await specialtyService.createSpecialty(payload);
   sendResponse(res, {
     httpStatusCode: 201,
