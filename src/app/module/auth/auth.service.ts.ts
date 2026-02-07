@@ -1,5 +1,6 @@
 import { UserStatus } from "../../../generated/prisma/enums";
 import { auth } from "../../lib/auth";
+import { prisma } from "../../lib/prisma";
 
 interface IRegisterPatientPayload {
   name: string;
@@ -20,7 +21,32 @@ const registerPatient = async (payload: IRegisterPatientPayload) => {
   if (!data.user) {
     throw new Error("Failed to register patient");
   }
-  return data;
+  // create patient profile in Transaction after sign uu of paitent in User Model
+  try {
+    const patientProfile = await prisma.$transaction(async (tx) => {
+      const patient = await tx.patient.create({
+        data: {
+          userId: data.user.id,
+          name: data.user.name,
+          email: data.user.email,
+        },
+      });
+      return patient;
+    });
+
+    return {
+      ...data,
+      patientProfile,
+    };
+  } catch (error) {
+    // If patient profile creation fails, we should consider rolling back the user creation as well, but since we are using a third-party auth service, we might not have control over that.
+    // In a real-world scenario, you would want to implement a compensation mechanism to handle such cases.
+    console.error("Error creating patient profile:", error);
+    await prisma.user.delete({
+      where: { id: data.user.id },
+    });
+    throw new Error("Failed to create patient profile after registration");
+  }
 };
 
 interface ILoginUserPayload {

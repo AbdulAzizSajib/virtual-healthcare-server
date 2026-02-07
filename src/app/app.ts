@@ -2,6 +2,9 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import { specialtyRouter } from "./module/specialty/specialty.router";
 import authRouter from "./module/auth/auth.router";
+import { globalErrorHandler } from "./middleware/globalErrorHandler";
+import { notFoundMiddleware } from "./middleware/notFound";
+import userRouter from "./module/user/user.router";
 
 const app = express();
 
@@ -22,5 +25,9 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/api/v1/specialties", specialtyRouter);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/users", userRouter);
+
+app.use(globalErrorHandler);
+app.use(notFoundMiddleware);
 
 export default app;
