@@ -1,7 +1,7 @@
 import z from "zod";
 import { Gender } from "../../../generated/prisma/enums";
 
-export const createDoctorZodSchema = z.object({
+const createDoctorValidationSchema = z.object({
   password: z
     .string("Password is required")
     .min(6, "Password must be at least 6 characters")
@@ -60,3 +60,40 @@ export const createDoctorZodSchema = z.object({
     .array(z.uuid(), "Specialties must be an array of strings")
     .min(1, "At least one specialty is required"),
 });
+
+const createAdminValidationSchema = z.object({
+  body: z.object({
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    admin: z.object({
+      name: z.string().min(1, "Name is required"),
+      email: z.email("Invalid email format"),
+      profilePhoto: z.url("Invalid URL format").optional(),
+      contactNumber: z.string().min(1, "Contact number is required"),
+      gender: z.enum(
+        [Gender.MALE, Gender.FEMALE],
+        "Gender must be either MALE or FEMALE",
+      ),
+    }),
+  }),
+});
+const createSuperAdminValidationSchema = z.object({
+  body: z.object({
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    superAdmin: z.object({
+      name: z.string().min(1, "Name is required"),
+      email: z.email("Invalid email format"),
+      profilePhoto: z.url("Invalid URL format").optional(),
+      contactNumber: z.string().min(1, "Contact number is required"),
+      gender: z.enum(
+        [Gender.MALE, Gender.FEMALE],
+        "Gender must be either MALE or FEMALE",
+      ),
+    }),
+  }),
+});
+
+export const UserValidation = {
+  createDoctorValidationSchema,
+  createAdminValidationSchema,
+  createSuperAdminValidationSchema,
+};

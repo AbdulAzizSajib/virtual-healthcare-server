@@ -5,6 +5,7 @@ import authRouter from "./module/auth/auth.router";
 import { globalErrorHandler } from "./middleware/globalErrorHandler";
 import { notFoundMiddleware } from "./middleware/notFound";
 import userRouter from "./module/user/user.router";
+import doctorRouter from "./module/doctor/doctor.router";
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/v1/specialties", specialtyRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/doctors", doctorRouter);
 
 app.use(globalErrorHandler);
 app.use(notFoundMiddleware);
