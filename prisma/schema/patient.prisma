@@ -16,6 +16,15 @@ model Patient {
     userId String @unique
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
+    // relation with Appointment
+    appointments      Appointment[]
+    // relation with Review
+    reviews           Review[]
+    // relation with PatientHealthData
+    patientHealthData PatientHealthData?
+    // relation with MedicalReport
+    medicalReports    MedicalReport[]
+
     @@index([email], name: "idx_patient_email")
     @@index([isDeleted], name: "idx_patient_isDeleted")
     @@map("patients")

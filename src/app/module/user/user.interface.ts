@@ -28,14 +28,5 @@ export interface ICreateAdmin {
     contactNumber: string;
     gender: Gender;
   };
-}
-export interface ICreateSuperAdmin {
-  password: string;
-  superAdmin: {
-    name: string;
-    email: string;
-    profilePhoto?: string;
-    contactNumber: string;
-    gender: Gender;
-  };
+  role: "ADMIN" | "SUPER_ADMIN";
 }

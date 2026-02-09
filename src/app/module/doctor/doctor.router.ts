@@ -2,6 +2,8 @@ import { Router } from "express";
 import { doctorController } from "./doctor.controller";
 import { checkAuth } from "../../middleware/checkAuth";
 import { Role } from "../../../generated/prisma/enums";
+import { validateRequest } from "../../middleware/validateRequest";
+import { updateDoctorZodSchema } from "./doctor.validation";
 
 const doctorRouter = Router();
 
@@ -11,7 +13,11 @@ doctorRouter.get(
   doctorController.getAllDoctors,
 );
 doctorRouter.get("/:id", doctorController.getDoctorById);
-doctorRouter.patch("/:id", doctorController.updateDoctor);
+doctorRouter.patch(
+  "/:id",
+  validateRequest(updateDoctorZodSchema),
+  doctorController.updateDoctor,
+);
 doctorRouter.delete("/:id", doctorController.deleteDoctor);
 
 export default doctorRouter;
