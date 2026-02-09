@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import { specialtyRouter } from "./module/specialty/specialty.router";
 import authRouter from "./module/auth/auth.router";
 import { globalErrorHandler } from "./middleware/globalErrorHandler";
@@ -16,6 +17,7 @@ app.use(
   }),
 );
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

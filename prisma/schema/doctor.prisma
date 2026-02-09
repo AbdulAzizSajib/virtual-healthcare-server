@@ -28,6 +28,14 @@ model Doctor {
     // relation with DoctorSpecialty
     specialties DoctorSpecialty[]
 
+    // relation with DoctorSchedule
+    doctorSchedules DoctorSchedule[]
+
+    // relation with Appointment
+    appointments Appointment[]
+    // relation with Review
+    reviews      Review[]
+
     @@index([email], name: "idx_doctor_email")
     @@index([isDeleted], name: "idx_doctor_isDeleted")
     @@map("doctors")

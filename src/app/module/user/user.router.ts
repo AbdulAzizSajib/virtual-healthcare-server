@@ -16,16 +16,9 @@ userRouter.post(
 );
 userRouter.post(
   "/create-admin",
-  checkAuth(Role.SUPER_ADMIN),
-  validateRequest(UserValidation.createAdminValidationSchema),
+  checkAuth(Role.SUPER_ADMIN, Role.ADMIN),
+  validateRequest(UserValidation.createAdminZodSchema),
   userController.createAdmin,
-);
-
-userRouter.post(
-  "/create-super-admin",
-  checkAuth(Role.SUPER_ADMIN),
-  validateRequest(UserValidation.createSuperAdminValidationSchema),
-  userController.createSuperAdmin,
 );
 
 export default userRouter;
