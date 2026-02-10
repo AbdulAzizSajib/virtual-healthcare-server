@@ -13,5 +13,6 @@ authRouter.get(
   checkAuth(Role.ADMIN, Role.DOCTOR, Role.PATIENT, Role.SUPER_ADMIN),
   authController.getMe,
 );
+authRouter.post("/refresh-token", authController.getNewToken);
 
 export default authRouter;
