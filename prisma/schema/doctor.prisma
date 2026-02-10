@@ -32,9 +32,11 @@ model Doctor {
     doctorSchedules DoctorSchedule[]
 
     // relation with Appointment
-    appointments Appointment[]
+    appointments  Appointment[]
     // relation with Review
-    reviews      Review[]
+    reviews       Review[]
+    // relation with Prescription
+    prescriptions Prescription[]
 
     @@index([email], name: "idx_doctor_email")
     @@index([isDeleted], name: "idx_doctor_isDeleted")
