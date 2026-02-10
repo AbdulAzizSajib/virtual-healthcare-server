@@ -78,6 +78,13 @@ export const checkAuth =
               "You do not have permission to access this resource.",
             );
           }
+
+          req.user = {
+            userId: user.id,
+            email: user.email,
+            role: user.role as Role,
+          };
+
           return next();
         }
       }

@@ -24,6 +24,8 @@ model Patient {
     patientHealthData PatientHealthData?
     // relation with MedicalReport
     medicalReports    MedicalReport[]
+    // relation with Prescription
+    prescriptions     Prescription[]
 
     @@index([email], name: "idx_patient_email")
     @@index([isDeleted], name: "idx_patient_isDeleted")
