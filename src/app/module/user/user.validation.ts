@@ -78,6 +78,10 @@ export const createAdminZodSchema = z.object({
       .max(14, "Contact number must be at most 15 characters")
       .optional(),
     profilePhoto: z.url("Profile photo must be a valid URL").optional(),
+    gender: z.enum(
+      [Gender.MALE, Gender.FEMALE],
+      "Gender must be either MALE or FEMALE",
+    ),
   }),
   role: z.enum(
     ["ADMIN", "SUPER_ADMIN"],
