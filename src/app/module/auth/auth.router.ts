@@ -19,5 +19,12 @@ authRouter.post(
   checkAuth(Role.ADMIN, Role.DOCTOR, Role.PATIENT, Role.SUPER_ADMIN),
   authController.changePassword,
 );
+authRouter.post(
+  "/logout",
+  checkAuth(Role.ADMIN, Role.DOCTOR, Role.PATIENT, Role.SUPER_ADMIN),
+  authController.logoutUser,
+);
+
+authRouter.post("/verify-email", authController.verifyEmail);
 
 export default authRouter;
