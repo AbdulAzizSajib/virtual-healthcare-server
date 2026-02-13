@@ -30,4 +30,10 @@ authRouter.post("/verify-email", authController.verifyEmail);
 authRouter.post("/forget-password", authController.forgetPassword);
 authRouter.post("/reset-password", authController.resetPassword);
 
+//
+
+authRouter.get("/login/google", authController.googleLogin);
+authRouter.get("/google/success", authController.googleLoginSuccess);
+authRouter.get("/oauth/error", authController.handleOAuthError);
+
 export default authRouter;
