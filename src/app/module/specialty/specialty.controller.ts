@@ -5,8 +5,12 @@ import { sendResponse } from "../../shared/sendResponse";
 
 //
 const createSpecialty = catchAsync(async (req: Request, res: Response) => {
-  const payload = req.body;
+  const payload = {
+    ...req.body,
+    icon: req.file?.path,
+  };
   console.log(payload);
+
   const result = await specialtyService.createSpecialty(payload);
   sendResponse(res, {
     httpStatusCode: 201,
@@ -27,12 +31,12 @@ const getAllSpecialties = catchAsync(async (req: Request, res: Response) => {
 });
 const deleteSpecialty = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const result = await specialtyService.deleteSpecialty(id as string);
+  await specialtyService.deleteSpecialty(id as string);
   sendResponse(res, {
     httpStatusCode: 200,
     success: true,
     message: "Specialty deleted successfully",
-    data: result,
+    data: null,
   });
 });
 export const specialtyController = {

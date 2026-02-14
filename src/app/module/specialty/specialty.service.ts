@@ -2,6 +2,7 @@ import status from "http-status";
 import { Specialty } from "../../../generated/prisma/client";
 import AppError from "../../errorHelpers/AppError";
 import { prisma } from "../../lib/prisma";
+import { deleteFileFromCloudinary } from "../../config/cloudinary.config";
 
 const createSpecialty = async (payload: Specialty): Promise<Specialty> => {
   const existingSpecialty = await prisma.specialty.findUnique({
@@ -31,6 +32,10 @@ const deleteSpecialty = async (id: string): Promise<Specialty> => {
   const specialty = await prisma.specialty.delete({
     where: { id },
   });
+  // delete the icon from cloudinary
+  if (specialty.icon) {
+    await deleteFileFromCloudinary(specialty.icon);
+  }
 
   return specialty;
 };
