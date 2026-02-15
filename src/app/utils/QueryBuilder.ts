@@ -44,6 +44,7 @@ export class QueryBuilder<
   }
 
   search(): this {
+    // part-4
     const { searchTerm } = this.queryParams;
     const { searchableFields } = this.config;
     // doctorSearchableFields = ['user.name', 'user.email', 'specialties.specialty.title' , 'specialties.specialty.description']
