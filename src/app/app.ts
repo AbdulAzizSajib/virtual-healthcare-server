@@ -11,8 +11,11 @@ import adminRouter from "./module/admin/admin.router";
 import { auth } from "./lib/auth";
 import { toNodeHandler } from "better-auth/node";
 import path from "path";
+import qs from "qs";
 import { envVars } from "./config/env";
 const app = express();
+
+app.set("query parser", (str: string) => qs.parse(str));
 
 app.set("view engine", "ejs");
 app.set("views", path.resolve(process.cwd(), `src/app/templates`));
