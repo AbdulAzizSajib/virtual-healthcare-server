@@ -13,6 +13,7 @@ import { toNodeHandler } from "better-auth/node";
 import path from "path";
 import qs from "qs";
 import { envVars } from "./config/env";
+import scheduleRouter from "./module/schedule/schedule.router";
 const app = express();
 
 app.set("query parser", (str: string) => qs.parse(str));
@@ -50,6 +51,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/doctors", doctorRouter);
 app.use("/api/v1/admins", adminRouter);
+app.use("/api/v1/schedules", scheduleRouter);
 
 app.use(globalErrorHandler);
 app.use(notFoundMiddleware);
