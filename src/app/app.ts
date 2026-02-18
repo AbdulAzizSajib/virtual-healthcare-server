@@ -15,6 +15,7 @@ import qs from "qs";
 import { envVars } from "./config/env";
 import scheduleRouter from "./module/schedule/schedule.router";
 import doctorScheduleRouter from "./module/doctorSchedule/doctorSchedule.router";
+import appointmentRouter from "./module/appointment/appointment.router";
 const app = express();
 
 app.set("query parser", (str: string) => qs.parse(str));
@@ -54,6 +55,7 @@ app.use("/api/v1/doctors", doctorRouter);
 app.use("/api/v1/admins", adminRouter);
 app.use("/api/v1/schedules", scheduleRouter);
 app.use("/api/v1/doctor-schedules", doctorScheduleRouter);
+app.use("/api/v1/appointments", appointmentRouter);
 
 app.use(globalErrorHandler);
 app.use(notFoundMiddleware);
