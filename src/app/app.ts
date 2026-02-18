@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import express, { Request, Response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -15,12 +17,28 @@ import qs from "qs";
 import { envVars } from "./config/env";
 import scheduleRouter from "./module/schedule/schedule.router";
 import doctorScheduleRouter from "./module/doctorSchedule/doctorSchedule.router";
+import { PaymentController } from "./module/payment/payment.controller";
+import { AppointmentService } from "./module/appointment/appointment.service";
+import cron from "node-cron";
+
 const app = express();
 
 app.set("query parser", (str: string) => qs.parse(str));
 
 app.set("view engine", "ejs");
 app.set("views", path.resolve(process.cwd(), `src/app/templates`));
+
+//  stripe
+
+app.post(
+  "/webhook",
+  express.raw({ type: "application/json" }),
+  // async (req: Request, res: Response) => {
+  //   console.log("Webhook received:", req.body);
+  //   res.status(200).send("Webhook received");
+  // },
+  PaymentController.handleStripeWebhookEvent,
+);
 
 app.use(
   cors({
@@ -45,6 +63,18 @@ app.use(express.urlencoded({ extended: true }));
 // server health check
 app.get("/", (req: Request, res: Response) => {
   res.status(200).send("Server is running...");
+});
+
+cron.schedule("*/25 * * * *", async () => {
+  try {
+    console.log("Running cron job to cancel unpaid appointments...");
+    await AppointmentService.cancelUnpaidAppointments();
+  } catch (error: any) {
+    console.error(
+      "Error occurred while canceling unpaid appointments:",
+      error.message,
+    );
+  }
 });
 
 app.use("/api/v1/specialties", specialtyRouter);
