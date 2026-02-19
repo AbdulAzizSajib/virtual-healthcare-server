@@ -6,7 +6,7 @@ model Admin {
     profilePhoto  String?
     contactNumber String?
     address       String?
-    gender        Gender
+    gender        Gender?
     isDeleted     Boolean   @default(false)
     deletedAt     DateTime?
 

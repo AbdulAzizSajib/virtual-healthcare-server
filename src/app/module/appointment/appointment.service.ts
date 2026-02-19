@@ -56,7 +56,6 @@ const bookAppointment = async (
         videoCallingId,
       },
     });
-
     await tx.doctorSchedule.update({
       where: {
         doctorId_scheduleId: {
@@ -160,7 +159,6 @@ const getMyAppointments = async (user: IRequestUser) => {
   } else {
     throw new Error("User not found");
   }
-
   return appointments;
 };
 
@@ -168,7 +166,6 @@ const getMyAppointments = async (user: IRequestUser) => {
 // 2. Doctors can only update Appoinment status from schedule to inprogress or inprogress to complted or schedule to cancelled.
 // 3. Patients can only cancel the scheduled appointment if it scheduled not completed or cancelled or inprogress.
 // 4. Admin and Super admin can update to any status.
-
 const changeAppointmentStatus = async (
   appointmentId: string,
   appointmentStatus: AppointmentStatus,
@@ -192,7 +189,6 @@ const changeAppointmentStatus = async (
     if (!(user?.email === appointmentData.doctor.email))
       throw new AppError(status.BAD_REQUEST, "This is not your appointment");
   }
-
   return await prisma.appointment.update({
     where: {
       id: appointmentId,
