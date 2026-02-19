@@ -20,6 +20,7 @@ import doctorScheduleRouter from "./module/doctorSchedule/doctorSchedule.router"
 import { PaymentController } from "./module/payment/payment.controller";
 import { AppointmentService } from "./module/appointment/appointment.service";
 import cron from "node-cron";
+import AppointmentRouter from "./module/appointment/appointment.router";
 
 const app = express();
 
@@ -84,7 +85,7 @@ app.use("/api/v1/doctors", doctorRouter);
 app.use("/api/v1/admins", adminRouter);
 app.use("/api/v1/schedules", scheduleRouter);
 app.use("/api/v1/doctor-schedules", doctorScheduleRouter);
-app.use("/api/v1/appointments", appointmentRouter);
+app.use("/api/v1/appointments", AppointmentRouter);
 
 app.use(globalErrorHandler);
 app.use(notFoundMiddleware);
