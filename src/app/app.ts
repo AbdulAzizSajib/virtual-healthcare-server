@@ -21,6 +21,8 @@ import { PaymentController } from "./module/payment/payment.controller";
 import { AppointmentService } from "./module/appointment/appointment.service";
 import cron from "node-cron";
 import AppointmentRouter from "./module/appointment/appointment.router";
+import { ReviewRouter } from "./module/review/review.router";
+import patientRouter from "./module/patient/patient.router";
 
 const app = express();
 
@@ -81,11 +83,13 @@ cron.schedule("*/25 * * * *", async () => {
 app.use("/api/v1/specialties", specialtyRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/patients", patientRouter);
 app.use("/api/v1/doctors", doctorRouter);
 app.use("/api/v1/admins", adminRouter);
 app.use("/api/v1/schedules", scheduleRouter);
 app.use("/api/v1/doctor-schedules", doctorScheduleRouter);
 app.use("/api/v1/appointments", AppointmentRouter);
+app.use("/api/v1/reviews", ReviewRouter);
 
 app.use(globalErrorHandler);
 app.use(notFoundMiddleware);
