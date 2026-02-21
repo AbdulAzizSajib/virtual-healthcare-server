@@ -24,6 +24,8 @@ import AppointmentRouter from "./module/appointment/appointment.router";
 import { ReviewRouter } from "./module/review/review.router";
 import patientRouter from "./module/patient/patient.router";
 import prescriptionRouter from "./module/prescription/prescription.router";
+import { StatsRoutes } from "./module/stats/stats.router";
+import { PaymentRouter } from "./module/payment/payment.router";
 
 const app = express();
 
@@ -92,6 +94,8 @@ app.use("/api/v1/doctor-schedules", doctorScheduleRouter);
 app.use("/api/v1/appointments", AppointmentRouter);
 app.use("/api/v1/prescriptions", prescriptionRouter);
 app.use("/api/v1/reviews", ReviewRouter);
+app.use("/api/v1/stats", StatsRoutes);
+app.use("/api/v1/payments", PaymentRouter);
 
 app.use(globalErrorHandler);
 app.use(notFoundMiddleware);
