@@ -23,6 +23,7 @@ import cron from "node-cron";
 import AppointmentRouter from "./module/appointment/appointment.router";
 import { ReviewRouter } from "./module/review/review.router";
 import patientRouter from "./module/patient/patient.router";
+import prescriptionRouter from "./module/prescription/prescription.router";
 
 const app = express();
 
@@ -89,6 +90,7 @@ app.use("/api/v1/admins", adminRouter);
 app.use("/api/v1/schedules", scheduleRouter);
 app.use("/api/v1/doctor-schedules", doctorScheduleRouter);
 app.use("/api/v1/appointments", AppointmentRouter);
+app.use("/api/v1/prescriptions", prescriptionRouter);
 app.use("/api/v1/reviews", ReviewRouter);
 
 app.use(globalErrorHandler);
