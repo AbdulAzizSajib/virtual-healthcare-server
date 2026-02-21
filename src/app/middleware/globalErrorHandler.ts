@@ -8,6 +8,7 @@ import z from "zod";
 import { status } from "http-status";
 import AppError from "../errorHelpers/AppError";
 import { deleteFileFromCloudinary } from "../config/cloudinary.config";
+import { deleteUploadedFilesFromGlobalErrorHandler } from "../utils/deleteUploadedFilesFromGlobalErrorHandler";
 
 //  global error handler
 
@@ -23,14 +24,16 @@ export const globalErrorHandler = async (
   }
 
   // cleanup uploaded files if any error occurs during file upload or processing
-  if (req.file) {
-    await deleteFileFromCloudinary(req.file.path);
-  }
+  // if (req.file) {
+  //   await deleteFileFromCloudinary(req.file.path);
+  // }
 
-  if (req.files && Array.isArray(req.files) && req.files.length > 0) {
-    const imageUrls = req.files.map((file) => file.path);
-    await Promise.all(imageUrls.map((url) => deleteFileFromCloudinary(url)));
-  }
+  // if (req.files && Array.isArray(req.files) && req.files.length > 0) {
+  //   const imageUrls = req.files.map((file) => file.path);
+  //   await Promise.all(imageUrls.map((url) => deleteFileFromCloudinary(url)));
+  // }
+  await deleteUploadedFilesFromGlobalErrorHandler(req);
+
   // handle different types of errors and send appropriate response
 
   let errorSources: TErrorSources[] = [];
